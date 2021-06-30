@@ -246,7 +246,7 @@ div[class*="-tiles"] input {
 }
 
 @media (max-width: 500px) {
-  .toolbar {
+  .size, .toolbar {
     display: none;
   }
 }
