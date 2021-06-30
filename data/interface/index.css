@@ -1,0 +1,266 @@
+:root {
+  --tile-width: 22px;
+  --tile-height: 22px;
+}
+
+body {
+  margin: 0;
+  border: 0;
+  color: #333;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: fit-content;
+  padding: 0 0 10px 0;
+}
+
+table {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-spacing: 0;
+}
+
+details {
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+summary {
+  outline: none;
+}
+
+.size {
+  top: 0;
+  right: 50%;
+  z-index: 11;
+  font-size: 12px;
+  padding: 3px 5px;
+  user-select: none;
+  position: absolute;
+  font-family: arial,sans-serif;
+  color: rgba(127, 127, 127, 0.5);
+}
+
+.size input {
+  padding: 0;
+  width: 68px;
+  height: 32px;
+  outline: none;
+  font-size: 12px;
+  text-indent: 5px;
+  margin: 2px 0 2px 5px;
+  color: rgba(0,0,0,0.5);
+  box-sizing: border-box;
+  font-family: monospace;
+  border: solid 1px rgba(0,0,0,0.1);
+  background-color: rgba(255,255,255,0.5);
+}
+
+.toolbar {
+  top: 1px;
+  right: 1px;
+  z-index: 11;
+  position: absolute;
+  background-color: transparent;
+}
+
+.toolbar table {
+  width: auto;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.toolbar table tr td {
+  padding: 0;
+  width: 38px;
+  height: 32px;
+  cursor: pointer;
+  user-select: none;
+  line-height: 32px;
+  text-align: center;
+  transition: 300ms ease all;
+}
+
+.toolbar table tr td:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.toolbar table tr td svg {
+  fill: #777;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.picker {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.picker .fill {
+  text-align: center;
+}
+
+.picker .fill p {
+  color: #333;
+  font-size: 11px;
+  cursor: default;
+  text-align: center;
+  margin: 150px 0 0 0;
+}
+
+.picker .fill input {
+  border: 0;
+  color: #555;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: monospace;
+}
+
+.picker .fill input:nth-child(even) {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.picker .fill input:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.picker .button {
+  border: 0;
+  width: 50%;
+  color: #8c8c8c;
+  font-size: 12px;
+  position: relative;
+  background-size: 64px !important;
+  background-color: rgba(0,0,0,0.1);
+}
+
+.picker .button:after {
+  left: 5px;
+  bottom: 5px;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 32px;
+  position: absolute;
+  font-family: monospace;
+  color: rgba(0, 0, 0, 0.5);
+  content: "Pick a new color";
+  border: solid 1px rgba(0,0,0,0.1);
+  background-color: rgba(255,255,255,0.5);
+}
+
+div[class*="-tiles"] {
+  margin: auto;
+  height: auto;
+  padding: 10px;
+  width: calc(100% - 50px);
+}
+
+div[class*="-tiles"] input {
+  border: 0;
+  padding: 0;
+  margin: 1px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 0;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--tile-width);
+  height: var(--tile-height);
+  min-width: var(--tile-width);
+  max-width: var(--tile-width);
+  min-height: var(--tile-height);;
+  max-height: var(--tile-height);;
+}
+
+div[class*="-tiles"] input:hover {
+  transform: scale(2);
+}
+
+.picker, 
+div[class*="-tiles"] input {
+  transition: 150ms ease all;
+  font-family: arial, sans-serif;
+}
+
+.msc-content {
+  font-family: arial,sans-serif;
+}
+
+.title {
+  width: 100%;
+  color: #777;
+  height: 38px;
+  font-size: 12px;
+  line-height: 38px;
+  margin: 5px 0 0 0;
+  padding: 0 0 0 10px;
+  text-transform: capitalize;
+  font-family: arial,sans-serif;
+}
+
+#clear {
+  top: 5px;
+  left: 5px;
+  padding: 0;
+  z-index: 11;
+  width: 42px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 32px;
+  user-select: none;
+  position: absolute;
+  text-align: center;
+  transition: 300ms ease all;
+  font-family: arial,sans-serif;
+  color: rgba(127, 127, 127, 0.5);
+  border: solid 1px rgba(0,0,0,0.1);
+  background-color: rgba(255,255,255,0.5);
+}
+
+#clear svg {
+  fill: #777;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+#picker {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  visibility: hidden;
+  background-color: transparent;
+}
+
+@media (max-width: 500px) {
+  .toolbar {
+    display: none;
+  }
+}
+
+@-moz-document url-prefix() {
+  .size input,
+  .picker .fill input,
+  .picker .button:after {
+    font-size: 11px;
+    font-weight: normal;
+    font-family: monaco, "andale mono", "lucida console", "courier new", monospace;
+  }
+}
+
+html[context="webapp"] .toolbar {
+  display: none;
+}

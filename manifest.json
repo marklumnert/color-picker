@@ -1,0 +1,35 @@
+{
+  "version": "0.1.2",
+  "manifest_version": 2,
+  "name": "Color Picker",
+  "offline_enabled": true,
+  "short_name": "color-picker",
+  "permissions": ["storage", "contextMenus"],
+  "homepage_url": "https://mybrowseraddon.com/color-picker.html",
+  "description": "Search for the perfect color via an stylish color picker in a popup window.",
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "lib/config.js", 
+      "lib/chrome.js",
+      "lib/runtime.js",
+      "lib/common.js"
+    ]
+  },
+  "browser_action": {
+    "default_title": "Color Picker",
+    "default_icon": {
+      "16": "data/icons/16.png",
+      "32": "data/icons/32.png",
+      "48": "data/icons/48.png",
+      "64": "data/icons/64.png"
+    }
+  },
+  "icons": {
+    "16": "data/icons/16.png",
+    "32": "data/icons/32.png",
+    "48": "data/icons/48.png",
+    "64": "data/icons/64.png",
+    "128": "data/icons/128.png"
+  }
+}
