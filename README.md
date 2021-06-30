@@ -7,7 +7,7 @@ Note: this add-on is NOT designed to pick colors from your screen (i.e. web page
 You can install this app as a PWA on your mobile device, moreover, it is available as a browser extension as-well-as a web application:
 
 Chrome: https://chrome.google.com/webstore/detail/color-picker/plkgncpmcodceeghncefaiohiekknelh  
-Edge:   
+Edge: https://microsoftedge.microsoft.com/addons/detail/hgfblglajhgcmkaafjcpgkndobacjnbf  
 Firefox: https://addons.mozilla.org/en-US/firefox/addon/color-picker-webext/  
 Opera: https://addons.opera.com/en/extensions/details/color-picker-4/  
 Webapp & PWA: https://webbrowsertools.com/color-picker/
