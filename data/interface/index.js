@@ -183,47 +183,9 @@ var config  = {
       }
     }
   },
-  "load": function () {
-    var size = document.getElementById("size");
-    var clear = document.getElementById("clear");
-    var reload = document.getElementById("reload");
-    var picker = document.getElementById("picker");
-    var support = document.getElementById("support");
-    var donation = document.getElementById("donation");
-    var container = picker.parentNode;
-    /*  */
-    clear.addEventListener("click", function () {
-      var action = window.confirm("Do you really want to clear all the user colors from storage?");
-      if (action === true) config.color.store("user", null);
-    }, false);
-    /*  */
-    support.addEventListener("click", function () {
-      var url = config.addon.homepage();
-      chrome.tabs.create({"url": url, "active": true});
-    }, false);
-    /*  */
-    donation.addEventListener("click", function () {
-      var url = config.addon.homepage() + "?reason=support";
-      chrome.tabs.create({"url": url, "active": true});
-    }, false);
-    /*  */
-    size.addEventListener("change", function (e) {
-      config.storage.write("tile-size", e.target.value);
-      document.documentElement.style.setProperty("--tile-width", e.target.value + "px");
-      document.documentElement.style.setProperty("--tile-height", e.target.value + "px");
-    }, false);
-    /*  */
-    container.addEventListener("click", function () {picker.click()});
-    reload.addEventListener("click", function () {document.location.reload()}, false);
-    picker.addEventListener("input", function (e) {config.color.store(null, e.target.value)}, false);
-    picker.addEventListener("change", function (e) {config.color.store("user", e.target.value)}, false);
-    /*  */
-    config.storage.load(config.app.start);
-    window.removeEventListener("load", config.load, false);
-  },
   "color": {
     "js": {
-      "tile": {"size": 22},
+      "tile": {"size": 28},
       "max": {"details": {"to": {"load": 6}}},
       "values": [[], ARTISTIC, FAVORITE, UI, POPULAR, DRAWING, GAME, CSS3, MATERIAL, RAINBOW, SPECTRUM, SAFE, RANDOM, MONITOR, COMIC, LARGE, HUES],
       "keys": ["user", "artistic", "favorite", "ui", "popular", "drawing", "game", "css3", "material", "rainbow", "spectrum", "safe", "random", "monitor", "comic", "large", "hues"]
@@ -276,6 +238,61 @@ var config  = {
         }
       }
     }
+  },
+  "load": function () {
+    var size = document.getElementById("size");
+    var clear = document.getElementById("clear");
+    var reload = document.getElementById("reload");
+    var picker = document.getElementById("picker");
+    var support = document.getElementById("support");
+    var donation = document.getElementById("donation");
+    var eyedropper = document.getElementById("eyedropper");
+    var colorpicker = document.getElementById("colorpicker");
+    /*  */
+    var container = picker.parentNode;
+    /*  */
+    clear.addEventListener("click", function () {
+      var action = window.confirm("Do you really want to clear all the user colors from storage?");
+      if (action === true) config.color.store("user", null);
+    }, false);
+    /*  */
+    support.addEventListener("click", function () {
+      var url = config.addon.homepage();
+      chrome.tabs.create({"url": url, "active": true});
+    }, false);
+    /*  */
+    donation.addEventListener("click", function () {
+      var url = config.addon.homepage() + "?reason=support";
+      chrome.tabs.create({"url": url, "active": true});
+    }, false);
+    /*  */
+    size.addEventListener("change", function (e) {
+      config.storage.write("tile-size", e.target.value);
+      document.documentElement.style.setProperty("--tile-width", e.target.value + "px");
+      document.documentElement.style.setProperty("--tile-height", e.target.value + "px");
+    }, false);
+    /*  */
+    eyedropper.addEventListener("click", function () {
+      if (EyeDropper) {
+        var target = new EyeDropper();
+        if (target) {
+          target.open().then(e => {
+            if (e.sRGBHex) {
+              config.color.store("user", e.sRGBHex);
+            }
+          });
+        }
+      }
+    });
+    /*  */
+    container.addEventListener("click", function () {picker.click()});
+    colorpicker.addEventListener("click", function () {picker.click()});
+    reload.addEventListener("click", function () {document.location.reload()}, false);
+    picker.addEventListener("input", function (e) {config.color.store(null, e.target.value)}, false);
+    picker.addEventListener("change", function (e) {config.color.store("user", e.target.value)}, false);
+    /*  */
+    config.storage.load(config.app.start);
+    window.removeEventListener("load", config.load, false);
   },
   "convert": {
     "hex2rgb": function (hex) {

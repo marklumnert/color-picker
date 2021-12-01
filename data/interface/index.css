@@ -26,42 +26,59 @@ details {
   outline: none;
   cursor: pointer;
   user-select: none;
+  margin-bottom: 10px;
 }
 
 summary {
   outline: none;
 }
 
-.size {
-  top: 0;
-  right: 50%;
+.controls {
+  left: 0;
+  border: 0;
+  padding: 0;
   z-index: 11;
-  font-size: 12px;
-  padding: 3px 5px;
+  width: 64px;
+  height: 42px;
+  cursor: pointer;
+  line-height: 42px;
   user-select: none;
   position: absolute;
-  font-family: arial,sans-serif;
-  color: rgba(127, 127, 127, 0.5);
+  text-align: center;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: 300ms ease all;
 }
 
-.size input {
+.controls input {
+  border: 0;
+  margin: 0;
   padding: 0;
-  width: 68px;
-  height: 32px;
+  color: #777;
+  width: 100%;
+  height: 100%;
   outline: none;
   font-size: 12px;
-  text-indent: 5px;
-  margin: 2px 0 2px 5px;
-  color: rgba(0,0,0,0.5);
+  font-weight: 600;
+  text-indent: 10px;
+  text-align: center;
   box-sizing: border-box;
   font-family: monospace;
-  border: solid 1px rgba(0,0,0,0.1);
-  background-color: rgba(255,255,255,0.5);
+  background-color: #fff;
+}
+
+.controls svg {
+  fill: #777;
+  pointer-events: none;
+}
+
+.controls:hover {
+  background-color: rgb(242 242 242);
 }
 
 .toolbar {
-  top: 1px;
-  right: 1px;
+  top: 0;
+  right: 0;
   z-index: 11;
   position: absolute;
   background-color: transparent;
@@ -69,17 +86,17 @@ summary {
 
 .toolbar table {
   width: auto;
-  border-spacing: 0;
   table-layout: fixed;
+  border-spacing: 1px;
 }
 
 .toolbar table tr td {
   padding: 0;
-  width: 38px;
-  height: 32px;
+  width: 48px;
+  height: 38px;
   cursor: pointer;
   user-select: none;
-  line-height: 32px;
+  line-height: 38px;
   text-align: center;
   transition: 300ms ease all;
 }
@@ -99,9 +116,11 @@ summary {
   border: 0;
   padding: 0;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .picker .fill {
+  padding: 0;
   text-align: center;
 }
 
@@ -115,12 +134,17 @@ summary {
 
 .picker .fill input {
   border: 0;
+  padding: 0;
   color: #555;
   width: 100%;
-  padding: 10px;
+  height: 40px;
   outline: none;
   font-size: 12px;
   cursor: pointer;
+  font-weight: 600;
+  line-height: 40px;
+  text-indent: 10px;
+  letter-spacing: 1px;
   font-family: monospace;
 }
 
@@ -140,21 +164,6 @@ summary {
   position: relative;
   background-size: 64px !important;
   background-color: rgba(0,0,0,0.1);
-}
-
-.picker .button:after {
-  left: 5px;
-  bottom: 5px;
-  height: 32px;
-  padding: 0 10px;
-  font-size: 12px;
-  line-height: 32px;
-  position: absolute;
-  font-family: monospace;
-  color: rgba(0, 0, 0, 0.5);
-  content: "Pick a new color";
-  border: solid 1px rgba(0,0,0,0.1);
-  background-color: rgba(255,255,255,0.5);
 }
 
 div[class*="-tiles"] {
@@ -197,41 +206,17 @@ div[class*="-tiles"] input {
 }
 
 .title {
+  margin: 0;
+  padding: 0;
   width: 100%;
   color: #777;
   height: 38px;
   font-size: 12px;
   line-height: 38px;
-  margin: 5px 0 0 0;
-  padding: 0 0 0 10px;
-  text-transform: capitalize;
-  font-family: arial,sans-serif;
-}
-
-#clear {
-  top: 5px;
-  left: 5px;
-  padding: 0;
-  z-index: 11;
-  width: 42px;
-  height: 32px;
-  cursor: pointer;
-  font-size: 12px;
-  line-height: 32px;
-  user-select: none;
-  position: absolute;
-  text-align: center;
-  transition: 300ms ease all;
-  font-family: arial,sans-serif;
-  color: rgba(127, 127, 127, 0.5);
-  border: solid 1px rgba(0,0,0,0.1);
-  background-color: rgba(255,255,255,0.5);
-}
-
-#clear svg {
-  fill: #777;
-  pointer-events: none;
-  vertical-align: middle;
+  text-indent: 10px;
+  letter-spacing: 1px;
+  font-family: monospace;
+  text-transform: uppercase;
 }
 
 #picker {
@@ -245,6 +230,11 @@ div[class*="-tiles"] input {
   background-color: transparent;
 }
 
+#tilesize {top: 196px}
+#clear {top: calc(0 * 42px + 1 * 1px)}
+#eyedropper {top: calc(2 * 42px + 3 * 1px)}
+#colorpicker {top: calc(1 * 42px + 2 * 1px)}
+
 @media (max-width: 500px) {
   .size, .toolbar {
     display: none;
@@ -252,9 +242,9 @@ div[class*="-tiles"] input {
 }
 
 @-moz-document url-prefix() {
+  .title,
   .size input,
-  .picker .fill input,
-  .picker .button:after {
+  .picker .fill input {
     font-size: 11px;
     font-weight: normal;
     font-family: monaco, "andale mono", "lucida console", "courier new", monospace;
