@@ -7,34 +7,38 @@ var config  = {
   },
   "notifications": {
     "create": function (message) {
-      var notify = new Notify();
+      const notify = new Notify();
       notify.display(message, "info");
     }
   },
-  "copy": (function () {
-    document.oncopy = function (e) {
+  "copy": {
+    "listener": function (e) {
       e.clipboardData.setData("text/plain", config.clipboard);
       e.preventDefault();
-    };
-    /*  */
-    return {
-      "clipboard": function () {
-        document.execCommand("Copy", false, null);
+    },
+    "clipboard": async function () {
+      const result = await navigator.permissions.query({"name": "clipboard-write"});
+      if (result.state === "granted") {
+        navigator.clipboard.writeText(config.clipboard);
       }
     }
-  })(),
+  },
   "resize": {
     "timeout": null,
     "method": function () {
-      var context = document.documentElement.getAttribute("context");
+      const context = document.documentElement.getAttribute("context");
       if (context === "win") {
         if (config.resize.timeout) window.clearTimeout(config.resize.timeout);
-        config.resize.timeout = window.setTimeout(function () {
+        config.resize.timeout = window.setTimeout(async function () {
+          let current = await chrome.windows.getCurrent();
+          /*  */
           config.storage.write("interface.size", {
-            "width": window.innerWidth || window.outerWidth,
-            "height": window.innerHeight || window.outerHeight
+            "top": current.top,
+            "left": current.left,
+            "width": current.width,
+            "height": current.height
           });
-        }, 300);
+        }, 1000);
       }
     }
   },
@@ -45,8 +49,9 @@ var config  = {
       document.getElementById("picker").value = color;
       document.getElementById("picker").parentNode.style.backgroundColor = color;
       /*  */
-      var details = document.getElementById("details");
+      const details = document.getElementById("details");
       details.textContent = '';
+      /*  */
       if (color) {
         config.color.add.numeric.values(details, color, null);
         config.color.add.numeric.values(details, color, "hex2hsb");
@@ -71,13 +76,13 @@ var config  = {
     "write": function (id, data) {
       if (id) {
         if (data !== '' && data !== null && data !== undefined) {
-          var tmp = {};
+          let tmp = {};
           tmp[id] = data;
           config.storage.local[id] = data;
-          chrome.storage.local.set(tmp, function () {});
+          chrome.storage.local.set(tmp);
         } else {
           delete config.storage.local[id];
-          chrome.storage.local.remove(id, function () {});
+          chrome.storage.local.remove(id);
         }
       }
     }
@@ -86,7 +91,7 @@ var config  = {
     "name": '',
     "connect": function () {
       config.port.name = "webapp";
-      var context = document.documentElement.getAttribute("context");
+      const context = document.documentElement.getAttribute("context");
       /*  */
       if (chrome.runtime) {
         if (chrome.runtime.connect) {
@@ -109,14 +114,14 @@ var config  = {
     }
   },
   "render": function (key, fill) {
-    var tiles = document.querySelector("." + key + "-tiles");
+    const tiles = document.querySelector("." + key + "-tiles");
     tiles.textContent = '';
     /*  */
     if (fill) {
-      var fragment  = document.createDocumentFragment();
-      for (var i = 0; i < config.color[key].list.length; i++) {
-        var input = document.createElement("input");
-        var size = (config.storage.read("tile-size") !== undefined ? config.storage.read("tile-size") : config.color.js.tile.size);
+      const fragment  = document.createDocumentFragment();
+      for (let i = 0; i < config.color[key].list.length; i++) {
+        const input = document.createElement("input");
+        const size = (config.storage.read("tile-size") !== undefined ? config.storage.read("tile-size") : config.color.js.tile.size);
         /*  */
         input.addEventListener("click", function (e) {config.color.store(key, e.target.getAttribute("color"))});
         document.documentElement.style.setProperty('--tile-height', size + "px");
@@ -143,19 +148,19 @@ var config  = {
   },
   "app": {
     "start": async function () {
-      var size = document.getElementById("size");
+      const size = document.getElementById("size");
       size.value = config.storage.read("tile-size") !== undefined ? config.storage.read("tile-size") : config.color.js.tile.size;
       /*  */
-      var details = [...document.querySelectorAll("details")];
-      for (var i = 0; i < details.length; i++) {
+      const details = [...document.querySelectorAll("details")];
+      for (let i = 0; i < details.length; i++) {
         details[i].addEventListener("click", function (e) {
           if (e.target.tagName.toLowerCase() === "summary") {
-            var i = parseInt(this.getAttribute("index"));
+            let i = parseInt(this.getAttribute("index"));
             if (i > -1) {
-              var key = config.color.js.keys[i];
-              var value = config.color.js.values[i];
-              var list = config.storage.read("color-" + key + "-list");
-              var current = config.storage.read("color-" + key + "-current");
+              const key = config.color.js.keys[i];
+              const value = config.color.js.values[i];
+              const list = config.storage.read("color-" + key + "-list");
+              const current = config.storage.read("color-" + key + "-current");
               /*  */
               config.color[key] = {};
               config.color[key].list = list !== undefined ? list : value;
@@ -166,34 +171,42 @@ var config  = {
         });
       }
       /*  */
-      var button = document.querySelector(".picker .button");
+      const button = document.querySelector(".picker .button");
       if (button) button.style.background = 'url("../icons/128.png") no-repeat center center';
       /*  */
-      for (var i = 0; i < config.color.js.max.details.to.load; i++) {
-        var detail = document.querySelector("details[index='" + i + "']");
+      for (let i = 0; i < config.color.js.max.details.to.load; i++) {
+        const detail = document.querySelector("details[index='" + i + "']");
         if (detail) detail.querySelector("summary").click();
         await (new Promise(resolve => window.setTimeout(resolve, 100)));
       }
       /*  */
-      var current = config.storage.read("color-picker-current");
+      const current = config.storage.read("color-picker-current");
       if (current) config.update(current);
       else {
-        var input = document.querySelector("input[color='#b48ead']");
+        const input = document.querySelector("input[color='#b48ead']");
         if (input) input.click();
       }
     }
   },
   "color": {
     "js": {
-      "tile": {"size": 28},
-      "max": {"details": {"to": {"load": 6}}},
       "values": [[], ARTISTIC, FAVORITE, UI, POPULAR, DRAWING, GAME, CSS3, MATERIAL, RAINBOW, SPECTRUM, SAFE, RANDOM, MONITOR, COMIC, LARGE, HUES],
-      "keys": ["user", "artistic", "favorite", "ui", "popular", "drawing", "game", "css3", "material", "rainbow", "spectrum", "safe", "random", "monitor", "comic", "large", "hues"]
+      "keys": ["user", "artistic", "favorite", "ui", "popular", "drawing", "game", "css3", "material", "rainbow", "spectrum", "safe", "random", "monitor", "comic", "large", "hues"],
+      "tile": {
+        "size": 28
+      },
+      "max": {
+        "details": {
+          "to": {
+            "load": 6
+          }
+        }
+      }
     },
     "add": {
       "numeric": {
         "values": function (e, color, method) {
-          var input = document.createElement("input");
+          const input = document.createElement("input");
           input.setAttribute("type", "text");
           input.setAttribute("readonly", true);
           input.value = method ? config.convert[method](color) : color;
@@ -201,7 +214,7 @@ var config  = {
           e.appendChild(input);
           /*  */
           input.addEventListener("click", function (e) {
-            var message = "Color code is copied to the clipboard:\n" + e.target.value;
+            const message = "Color code is copied to the clipboard:\n" + e.target.value;
             config.notifications.create(message);
             config.clipboard = e.target.value;
             config.copy.clipboard();
@@ -214,7 +227,7 @@ var config  = {
       if (key) {
         if (key === "user") {
           if (current) {
-            var tmp = config.color.user.list;
+            let tmp = config.color.user.list;
             tmp.push(current);
             tmp = [...new Set(tmp)];
             while (tmp.length > 100) tmp.shift();
@@ -240,29 +253,29 @@ var config  = {
     }
   },
   "load": function () {
-    var size = document.getElementById("size");
-    var clear = document.getElementById("clear");
-    var reload = document.getElementById("reload");
-    var picker = document.getElementById("picker");
-    var support = document.getElementById("support");
-    var donation = document.getElementById("donation");
-    var eyedropper = document.getElementById("eyedropper");
-    var colorpicker = document.getElementById("colorpicker");
+    const size = document.getElementById("size");
+    const clear = document.getElementById("clear");
+    const reload = document.getElementById("reload");
+    const picker = document.getElementById("picker");
+    const support = document.getElementById("support");
+    const donation = document.getElementById("donation");
+    const eyedropper = document.getElementById("eyedropper");
+    const colorpicker = document.getElementById("colorpicker");
     /*  */
-    var container = picker.parentNode;
+    const container = picker.parentNode;
     /*  */
     clear.addEventListener("click", function () {
-      var action = window.confirm("Do you really want to clear all the user colors from storage?");
+      const action = window.confirm("Do you really want to clear all the user colors from storage?");
       if (action === true) config.color.store("user", null);
     }, false);
     /*  */
     support.addEventListener("click", function () {
-      var url = config.addon.homepage();
+      const url = config.addon.homepage();
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
     donation.addEventListener("click", function () {
-      var url = config.addon.homepage() + "?reason=support";
+      const url = config.addon.homepage() + "?reason=support";
       chrome.tabs.create({"url": url, "active": true});
     }, false);
     /*  */
@@ -274,7 +287,7 @@ var config  = {
     /*  */
     eyedropper.addEventListener("click", function () {
       if (EyeDropper) {
-        var target = new EyeDropper();
+        const target = new EyeDropper();
         if (target) {
           target.open().then(e => {
             if (e.sRGBHex) {
@@ -296,16 +309,16 @@ var config  = {
   },
   "convert": {
     "hex2rgb": function (hex) {
-      var tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      var r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
+      let tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      let r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
       /*  */
       return (r >= 0 && g >= 0 && b >= 0) ? "RGB(" + r + ', ' + g + ', ' + b + ')' : "RGB(184, 39, 179)";
     },
     "hex2cmyk": function (hex) {
-      var tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      var r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
+      let tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      let r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
       /*  */
-      var c, m, y, k;
+      let c, m, y, k;
       r = r / 255; g = g / 255; b = b / 255;
       max = Math.max(r, g, b);
       k = 1 - max;
@@ -319,13 +332,13 @@ var config  = {
       return "CMYK(" + Math.floor(c * 100) + '%, ' + Math.floor(m * 100) + '%, ' + Math.floor(y * 100) + '%, ' + Math.floor(k * 100) + '%)';
     },
     "hex2hwb": function (hex) {
-      var tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      var r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
+      let tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      let r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
       /*  */
-      var h, w, B;
+      let h, w, B;
       r = r / 255, g = g / 255, b = b / 255;
-      var max = Math.max(r, g, b), min = Math.min(r, g, b);
-      var delta = max - min;
+      let max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let delta = max - min;
       /*  */
       if (delta === 0) h = 0;
       else if (r === max) h = (g - b) / delta;
@@ -339,23 +352,23 @@ var config  = {
       return "HWB(" + Math.floor(h) + ', ' + Math.floor(w * 100) + '%, ' + Math.floor(B * 100) + '%)';
     },
     "hex2hsb": function (hex) {
-      var tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      var r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
+      let tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      let r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
       /*  */
-      var computedH = 0, computedS = 0, computedV;
+      let computedH = 0, computedS = 0, computedV;
       if (r < 0 || g < 0 || b < 0 || r > 255 || g > 255 || b > 255) return "hsb(302, 78, 72)";
       if (r === null || g === null || b === null || isNaN(r) || isNaN(g) || isNaN(b)) return "hsb(302, 78, 72)";
       /*  */
       r = r / 255; g = g / 255; b = b / 255;
-      var minRGB = Math.min(r, Math.min(g, b));
-      var maxRGB = Math.max(r, Math.max(g, b));
+      let minRGB = Math.min(r, Math.min(g, b));
+      let maxRGB = Math.max(r, Math.max(g, b));
       if (minRGB === maxRGB) {
         computedV = minRGB;
         return "hsb(" + 0 + ', ' + 0 + ', ' + computedV + ')';
       }
       /*  */
-      var d = (r === minRGB) ? g - b : ((b === minRGB) ? r - g : b - r);
-      var h = (r === minRGB) ? 3 : ((b === minRGB) ? 1 : 5);
+      let d = (r === minRGB) ? g - b : ((b === minRGB) ? r - g : b - r);
+      let h = (r === minRGB) ? 3 : ((b === minRGB) ? 1 : 5);
       computedH = Math.floor(60 * (h - d / (maxRGB - minRGB)));
       computedS = Math.floor(100 * (maxRGB - minRGB) / maxRGB);
       computedV = Math.floor(100 * maxRGB);
@@ -363,10 +376,10 @@ var config  = {
       return "HSB(" + computedH + ', ' + computedS + ', ' + computedV + ')';
     },
     "hex2hsl": function (hex) {
-      var tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      var r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
+      let tmp = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      let r = parseInt(tmp[1], 16), g = parseInt(tmp[2], 16), b = parseInt(tmp[3], 16);
       /*  */
-      var min, max, i, l, s, maxcolor, h, rgb = [];
+      let min, max, i, l, s, maxcolor, h, rgb = [];
       rgb[0] = r / 255, rgb[1] = g / 255, rgb[2] = b / 255;
       min = rgb[0], max = rgb[0], maxcolor = 0;
       /*  */
@@ -403,3 +416,4 @@ config.port.connect();
 
 window.addEventListener("load", config.load, false);
 window.addEventListener("resize", config.resize.method, false);
+document.addEventListener("copy", config.copy.listener, false);

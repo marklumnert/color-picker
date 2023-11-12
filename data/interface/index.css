@@ -54,11 +54,11 @@ summary {
   border: 0;
   margin: 0;
   padding: 0;
-  color: #777;
+  color: #333;
   width: 100%;
   height: 100%;
   outline: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   text-indent: 10px;
   text-align: center;
@@ -68,7 +68,7 @@ summary {
 }
 
 .controls svg {
-  fill: #777;
+  fill: #555;
   pointer-events: none;
 }
 
@@ -106,7 +106,7 @@ summary {
 }
 
 .toolbar table tr td svg {
-  fill: #777;
+  fill: #555;
   pointer-events: none;
   vertical-align: middle;
 }
@@ -126,7 +126,7 @@ summary {
 
 .picker .fill p {
   color: #333;
-  font-size: 11px;
+  font-size: 12px;
   cursor: default;
   text-align: center;
   margin: 150px 0 0 0;
@@ -139,7 +139,7 @@ summary {
   width: 100%;
   height: 40px;
   outline: none;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   font-weight: 600;
   line-height: 40px;
@@ -160,7 +160,7 @@ summary {
   border: 0;
   width: 50%;
   color: #8c8c8c;
-  font-size: 12px;
+  font-size: 13px;
   position: relative;
   background-size: 64px !important;
   background-color: rgba(0,0,0,0.1);
@@ -177,7 +177,7 @@ div[class*="-tiles"] input {
   border: 0;
   padding: 0;
   margin: 1px;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   border-radius: 0;
   text-align: center;
@@ -209,9 +209,9 @@ div[class*="-tiles"] input {
   margin: 0;
   padding: 0;
   width: 100%;
-  color: #777;
+  color: #333;
   height: 38px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 38px;
   text-indent: 10px;
   letter-spacing: 1px;
@@ -245,7 +245,7 @@ div[class*="-tiles"] input {
   .title,
   .size input,
   .picker .fill input {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     font-family: monaco, "andale mono", "lucida console", "courier new", monospace;
   }

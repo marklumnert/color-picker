@@ -2,7 +2,7 @@ var Notify = function () {
   const fragment = this.fragment = document.createRange().createContextualFragment(`
     <style>
       .notify {
-        top: 150px;
+        top: 245px;
         right: 5px;
         position: absolute;
         font-family: arial,sans-serif;
