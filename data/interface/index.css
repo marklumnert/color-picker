@@ -38,10 +38,10 @@ summary {
   border: 0;
   padding: 0;
   z-index: 11;
-  width: 64px;
-  height: 42px;
+  width: 59px;
+  height: 59px;
   cursor: pointer;
-  line-height: 42px;
+  line-height: 58px;
   user-select: none;
   position: absolute;
   text-align: center;
@@ -58,7 +58,7 @@ summary {
   width: 100%;
   height: 100%;
   outline: none;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   text-indent: 10px;
   text-align: center;
@@ -70,6 +70,7 @@ summary {
 .controls svg {
   fill: #555;
   pointer-events: none;
+  vertical-align: middle;
 }
 
 .controls:hover {
@@ -107,6 +108,7 @@ summary {
 
 .toolbar table tr td svg {
   fill: #555;
+  margin-top: -2px;
   pointer-events: none;
   vertical-align: middle;
 }
@@ -135,7 +137,7 @@ summary {
 .picker .fill input {
   border: 0;
   padding: 0;
-  color: #555;
+  color: #000;
   width: 100%;
   height: 40px;
   outline: none;
@@ -146,6 +148,7 @@ summary {
   text-indent: 10px;
   letter-spacing: 1px;
   font-family: monospace;
+  transition: 300ms ease background-color;
 }
 
 .picker .fill input:nth-child(even) {
@@ -159,6 +162,7 @@ summary {
 .picker .button {
   border: 0;
   width: 50%;
+  padding: 0;
   color: #8c8c8c;
   font-size: 13px;
   position: relative;
@@ -209,7 +213,7 @@ div[class*="-tiles"] input {
   margin: 0;
   padding: 0;
   width: 100%;
-  color: #333;
+  color: #000;
   height: 38px;
   font-size: 13px;
   line-height: 38px;
@@ -224,16 +228,16 @@ div[class*="-tiles"] input {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  height: 236px;
   outline: none;
   visibility: hidden;
   background-color: transparent;
 }
 
-#tilesize {top: 196px}
-#clear {top: calc(0 * 42px + 1 * 1px)}
-#eyedropper {top: calc(2 * 42px + 3 * 1px)}
-#colorpicker {top: calc(1 * 42px + 2 * 1px)}
+#clear {top: calc(0 * 59px + 0 * 1px)}
+#tilesize {top: calc(3 * 59px + 3 * 1px)}
+#eyedropper {top: calc(2 * 59px + 2 * 1px)}
+#colorpicker {top: calc(1 * 59px + 1 * 1px)}
 
 @media (max-width: 500px) {
   .size, .toolbar {

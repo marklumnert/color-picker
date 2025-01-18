@@ -1,9 +1,8 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.5",
   "manifest_version": 3,
   "name": "Color Picker",
   "offline_enabled": true,
-  "permissions": ["storage", "contextMenus"],
   "homepage_url": "https://mybrowseraddon.com/color-picker.html",
   "description": "Search for the perfect color via an stylish color picker in a popup window.",
   "commands": {
@@ -12,6 +11,10 @@
   "background": {
     "service_worker": "background.js"
   },
+  "permissions": [
+    "storage", 
+    "contextMenus"
+  ],
   "action": {
     "default_title": "Color Picker",
     "default_icon": {

@@ -172,7 +172,7 @@ var config  = {
       }
       /*  */
       const button = document.querySelector(".picker .button");
-      if (button) button.style.background = 'url("../icons/128.png") no-repeat center center';
+      if (button) button.style.background = 'url("../icons/128.png") no-repeat calc(50% + 26px) center';
       /*  */
       for (let i = 0; i < config.color.js.max.details.to.load; i++) {
         const detail = document.querySelector("details[index='" + i + "']");
