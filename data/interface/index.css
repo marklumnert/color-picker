@@ -166,7 +166,7 @@ summary {
   color: #8c8c8c;
   font-size: 13px;
   position: relative;
-  background-size: 64px !important;
+  background-size: 84px !important;
   background-color: rgba(0,0,0,0.1);
 }
 
@@ -245,16 +245,44 @@ div[class*="-tiles"] input {
   }
 }
 
-@-moz-document url-prefix() {
-  .title,
-  .size input,
-  .picker .fill input {
-    font-size: 12px;
-    font-weight: normal;
-    font-family: monaco, "andale mono", "lucida console", "courier new", monospace;
-  }
+html[context="webapp"] .toolbar #reload,
+html[context="webapp"] .toolbar #support,
+html[context="webapp"] .toolbar #donation {
+  display: none;
 }
 
-html[context="webapp"] .toolbar {
-  display: none;
+html[theme='dark'], 
+html[theme='dark'] body {
+  color: #ebebeb;
+  color-scheme: dark;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .controls,
+html[theme='dark'] .controls input {
+  color: #ebebeb;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .controls:hover {
+  background-color: #3b3b3b;
+}
+
+html[theme='dark'] .toolbar table tr td:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[theme='dark'] .picker .fill input:hover,
+html[theme='dark'] .picker .fill input:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+html[theme='dark'] .title,
+html[theme='dark'] .picker .fill input {
+  color: #ebebeb;
+}
+
+html[theme='dark'] .controls svg,
+html[theme='dark'] .toolbar table tr td svg {
+  fill: #ebebeb;
 }

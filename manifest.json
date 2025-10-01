@@ -1,5 +1,5 @@
 {
-  "version": "0.1.5",
+  "version": "0.1.6",
   "manifest_version": 3,
   "name": "Color Picker",
   "offline_enabled": true,

@@ -149,9 +149,14 @@ var config  = {
   "app": {
     "start": async function () {
       const size = document.getElementById("size");
-      size.value = config.storage.read("tile-size") !== undefined ? config.storage.read("tile-size") : config.color.js.tile.size;
-      /*  */
+      const button = document.querySelector(".picker .button");
       const details = [...document.querySelectorAll("details")];
+      const current = config.storage.read("color-picker-current");
+      /*  */
+      if (button) button.style.background = 'url("../icons/168.png") no-repeat calc(50% + 26px) center';
+      size.value = config.storage.read("tile-size") !== undefined ? config.storage.read("tile-size") : config.color.js.tile.size;
+      document.documentElement.setAttribute("theme", config.storage.read("theme") !== undefined ? config.storage.read("theme") : "light");
+      /*  */
       for (let i = 0; i < details.length; i++) {
         details[i].addEventListener("click", function (e) {
           if (e.target.tagName.toLowerCase() === "summary") {
@@ -171,18 +176,15 @@ var config  = {
         });
       }
       /*  */
-      const button = document.querySelector(".picker .button");
-      if (button) button.style.background = 'url("../icons/128.png") no-repeat calc(50% + 26px) center';
-      /*  */
       for (let i = 0; i < config.color.js.max.details.to.load; i++) {
         const detail = document.querySelector("details[index='" + i + "']");
         if (detail) detail.querySelector("summary").click();
         await (new Promise(resolve => window.setTimeout(resolve, 100)));
       }
       /*  */
-      const current = config.storage.read("color-picker-current");
-      if (current) config.update(current);
-      else {
+      if (current) {
+        config.update(current);
+      } else {
         const input = document.querySelector("input[color='#b48ead']");
         if (input) input.click();
       }
@@ -254,6 +256,7 @@ var config  = {
   },
   "load": function () {
     const size = document.getElementById("size");
+    const theme = document.getElementById("theme");
     const clear = document.getElementById("clear");
     const reload = document.getElementById("reload");
     const picker = document.getElementById("picker");
@@ -284,6 +287,14 @@ var config  = {
       document.documentElement.style.setProperty("--tile-width", e.target.value + "px");
       document.documentElement.style.setProperty("--tile-height", e.target.value + "px");
     }, false);
+    /*  */
+    theme.addEventListener("click", function () {
+      let attribute = document.documentElement.getAttribute("theme");
+      attribute = attribute === "dark" ? "light" : "dark";
+      /*  */
+      document.documentElement.setAttribute("theme", attribute);
+      config.storage.write("theme", attribute);
+    });
     /*  */
     eyedropper.addEventListener("click", function () {
       if (EyeDropper) {
