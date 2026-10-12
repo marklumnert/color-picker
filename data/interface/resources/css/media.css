@@ -1,0 +1,104 @@
+@media (max-width: 700px) {
+  .toolbar table tr td {
+    width: 38px;
+  }
+}
+
+@media (max-width: 600px) {
+  .toolbar table tr td {
+    width: 32px;
+  }
+}
+
+@media (max-width: 500px) {
+  .toolbar table tr td {
+    width: 28px;
+  }
+  .picker .button {
+    width: 30%;
+    background-size: 64px !important;
+    background-position: calc(50% + 24px) center !important;
+  }
+  .controls  {
+    width: 48px;
+  }
+  .pane input[type='number'] {
+    width: 48px;
+    height: 28px;
+  }
+  .pane-row {
+    height: 32px;
+    margin-bottom: 5px;
+  }
+  .pane-row span:first-child {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .pane-row .hint,
+  .pane-row.reset span:first-child {
+    display: none;
+  }
+  .pane-value label {
+    margin-right: 0;
+  }
+  .pane input[type='radio'],
+  .pane input[type='checkbox'] {
+    margin: 0;
+  }
+  .pane-grid label {
+    height: 28px;
+  }
+  .scontrols-inline button {
+    width: 52px;
+  }
+  .pane-row.reset {
+    justify-content: center;
+  }
+  .pane-row button, .pane-actions button {
+    max-width: 82px;
+    overflow: hidden;
+    letter-spacing: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .strip button {
+    width: 38px;
+  }
+}
+
+@media (max-width: 400px) {
+  .picker .button {
+    background-size: 48px !important;
+    background-position: calc(50% + 16px) center !important;
+  }
+  .controls  {
+    width: 32px;
+  }
+  .strip button {
+    width: 28px;
+  }
+  .strip select {
+    width: 90px;
+  }
+  .pane-row.head,
+  .pane-row.head span:first-child,
+  .pane-row:has(input[type='radio']) span:first-child {
+    display: none;
+  }
+  .pane-row,
+  .pane-grid,
+  .pane-grid label {
+    padding: 0 5px;
+  }
+  .pane-grid {
+    margin: 0;
+  }
+}
+
+@media (max-width: 300px) {
+  #tilesize, .toolbar {
+    display: none;
+  }
+}

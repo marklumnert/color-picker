@@ -3,15 +3,22 @@
   --tile-height: 22px;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   border: 0;
   color: #333;
   width: 100%;
+  height: 100%;
+  display: flex;
   overflow-x: hidden;
-  overflow-y: scroll;
-  height: fit-content;
+  overflow-y: hidden;
   padding: 0 0 10px 0;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 table {
@@ -81,8 +88,9 @@ summary {
   top: 0;
   right: 0;
   z-index: 11;
+  flex: none;
   position: absolute;
-  background-color: transparent;
+  background-color: #fff;
 }
 
 .toolbar table {
@@ -103,12 +111,12 @@ summary {
 }
 
 .toolbar table tr td:hover {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .toolbar table tr td svg {
   fill: #555;
-  margin-top: -2px;
+  margin-top: -4px;
   pointer-events: none;
   vertical-align: middle;
 }
@@ -118,6 +126,9 @@ summary {
   border: 0;
   padding: 0;
   cursor: pointer;
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
   margin-bottom: 10px;
 }
 
@@ -128,7 +139,7 @@ summary {
 
 .picker .fill p {
   color: #333;
-  font-size: 12px;
+  font-size: 13px;
   cursor: default;
   text-align: center;
   margin: 150px 0 0 0;
@@ -152,11 +163,11 @@ summary {
 }
 
 .picker .fill input:nth-child(even) {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .picker .fill input:hover {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .picker .button {
@@ -167,49 +178,197 @@ summary {
   font-size: 13px;
   position: relative;
   background-size: 84px !important;
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-div[class*="-tiles"] {
-  margin: auto;
-  height: auto;
-  padding: 10px;
-  width: calc(100% - 50px);
+.pane {
+  min-height: 0;
+  flex: 0 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 50px 10px 10px 70px;
+  border: solid 1px rgb(0 0 0 / 15%);
 }
 
-div[class*="-tiles"] input {
-  border: 0;
-  padding: 0;
-  margin: 1px;
+.pane-row {
+  gap: 0;
+  color: #000;
+  height: 42px;
+  display: flex;
+  margin: 0 5px;
+  padding: 0 10px;
+  font-size: 13px;
+  flex-wrap: wrap;
+  align-items: center;
+  letter-spacing: 1px;
+  font-family: monospace;
+  text-transform: uppercase;
+  justify-content: space-between;
+  transition: 300ms ease background-color;
+}
+
+.pane-row.head {
+  cursor: default;
+  font-weight: 600;
+}
+
+.pane-row.reset {
+  padding-bottom: 10px;
+}
+
+.pane-row .hint {
+  color: #555;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-right: 5px;
+  text-transform: none;
+  font-family: system-ui, sans-serif;
+}
+
+.pane-value {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pane-value label {
+  margin: 0;
   font-size: 13px;
   cursor: pointer;
-  border-radius: 0;
-  text-align: center;
-  display: inline-block;
+  margin-right: 20px;
+}
+
+.pane input[type='number'] {
+  border: 0;
+  width: 72px;
+  height: 38px;
+  outline: none;
+  color: inherit;
+  padding: 0 10px;
+  font-size: 13px;
+  text-align: left;
+  border-radius: 2px;
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.pane input[type='number']:hover,
+.pane input[type='number']:focus {
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+.pane input[type='radio'],
+.pane input[type='checkbox'] {
+  margin: 5px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
   vertical-align: middle;
-  width: var(--tile-width);
-  height: var(--tile-height);
-  min-width: var(--tile-width);
-  max-width: var(--tile-width);
-  min-height: var(--tile-height);;
-  max-height: var(--tile-height);;
 }
 
-div[class*="-tiles"] input:hover {
-  transform: scale(2);
+.pane textarea {
+  border: 0;
+  padding: 10px;
+  height: 200px;
+  outline: none;
+  margin: 0 10px;
+  color: inherit;
+  font-size: 13px;
+  resize: vertical;
+  line-height: 1.5;
+  font-family: monospace;
+  box-sizing: border-box;
+  width: calc(100% - 20px);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.picker, 
-div[class*="-tiles"] input {
-  transition: 150ms ease all;
-  font-family: arial, sans-serif;
+.pane-actions {
+  gap: 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.msc-content {
-  font-family: arial,sans-serif;
+.pane-row button,
+.pane-actions button {
+  border: 0;
+  height: 38px;
+  color: inherit;
+  font-size: 13px;
+  padding: 0 15px;
+  cursor: pointer;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  font-family: monospace;
+  text-transform: uppercase;
+  transition: 300ms ease all;
+  background-color: transparent;
 }
 
-.title {
+.pane-row button:hover,
+.pane-actions button:hover {
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+.pane-grid {
+  gap: 2px;
+  display: grid;
+  margin: 0 5px;
+  padding: 0 10px 10px 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.pane-grid label {
+  gap: 5px;
+  color: #333;
+  height: 38px;
+  display: flex;
+  padding: 0 10px;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 2px;
+  letter-spacing: 1px;
+  align-items: center;
+  font-family: monospace;
+  text-transform: uppercase;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.pane-grid label:hover {
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+.pane-grid label:has(input:checked) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.pane-grid input {
+  cursor: pointer;
+  margin: 0;
+}
+
+.pane-grid span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sections {
+  flex: 1 1 0;
+  padding-top: 5px;
+  min-height: 42px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-top: solid 1px rgb(0 0 0 / 10%);
+}
+
+.sections details {
+  margin: 0 10px 10px 10px;
+}
+
+.sections summary {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -218,9 +377,169 @@ div[class*="-tiles"] input {
   font-size: 13px;
   line-height: 38px;
   text-indent: 10px;
+  position: relative;
   letter-spacing: 1px;
   font-family: monospace;
   text-transform: uppercase;
+}
+
+.scontrols {
+  top: 5px;
+  gap: 1px;
+  right: 5px;
+  display: none;
+  position: absolute;
+  align-items: center;
+}
+
+.sections summary:hover .scontrols,
+.scontrols:hover,
+.scontrols:focus-within {
+  display: inline-flex;
+}
+
+.scontrols button {
+  border: 0;
+  padding: 0;
+  width: 32px;
+  height: 28px;
+  cursor: pointer;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.10);
+  transition: 300ms ease background-color;
+}
+
+.scontrols button:hover {
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.scontrols svg {
+  fill: #444;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.scontrols-inline {
+  gap: 1px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.scontrols-inline button {
+  border: 0;
+  padding: 0;
+  width: 72px;
+  height: 32px;
+  cursor: pointer;
+  line-height: 32px;
+  text-align: center;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.10);
+  transition: 300ms ease background-color;
+}
+
+.scontrols-inline button:hover {
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.scontrols-inline svg {
+  fill: #444;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.strip {
+  gap: 1px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0 10px 10px 10px;
+}
+
+.strip select {
+  border: 0;
+  width: 128px;
+  height: 38px;
+  outline: none;
+  color: inherit;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 2px;
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.strip select:hover {
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+.strip button {
+  border: 0;
+  padding: 0;
+  width: 48px;
+  height: 38px;
+  cursor: pointer;
+  border-radius: 2px;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 300ms ease background-color;
+}
+
+.strip button:hover {
+  background-color: rgba(0, 0, 0, 0.10);
+}
+
+.strip svg {
+  fill: #555;
+  pointer-events: none;
+}
+
+.strip-hint {
+  color: #888;
+  font-size: 13px;
+  line-height: 24px;
+  text-indent: 10px;
+}
+
+.sections .tiles {
+  padding: 10px;
+}
+
+.sections .tiles input {
+  border: 0;
+  padding: 0;
+  margin: 1px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  width: var(--tile-width);
+  color: rgb(189, 187, 187);
+  height: var(--tile-height);
+  min-width: var(--tile-width);
+  max-width: var(--tile-width);
+  min-height: var(--tile-height);
+  max-height: var(--tile-height);
+}
+
+.sections .tiles input:hover {
+  transform: scale(2);
+}
+
+.picker,
+.sections .tiles input {
+  transition: 300ms ease all;
+  font-family: system-ui, sans-serif;
 }
 
 #picker {
@@ -239,50 +558,21 @@ div[class*="-tiles"] input {
 #eyedropper {top: calc(2 * 59px + 2 * 1px)}
 #colorpicker {top: calc(1 * 59px + 1 * 1px)}
 
-@media (max-width: 500px) {
-  .size, .toolbar {
-    display: none;
-  }
+html[page-scroll='true'] body {
+  height: auto;
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-html[context="webapp"] .toolbar #reload,
-html[context="webapp"] .toolbar #support,
-html[context="webapp"] .toolbar #donation {
+html[page-scroll='true'] .pane,
+html[page-scroll='true'] .picker,
+html[page-scroll='true'] .sections {
+  overflow: visible;
+}
+
+html[context='webapp'] .toolbar #reload,
+html[context='webapp'] .toolbar #support,
+html[context='webapp'] .toolbar #donation {
   display: none;
-}
-
-html[theme='dark'], 
-html[theme='dark'] body {
-  color: #ebebeb;
-  color-scheme: dark;
-  background-color: #1e1e1e;
-}
-
-html[theme='dark'] .controls,
-html[theme='dark'] .controls input {
-  color: #ebebeb;
-  background-color: #1e1e1e;
-}
-
-html[theme='dark'] .controls:hover {
-  background-color: #3b3b3b;
-}
-
-html[theme='dark'] .toolbar table tr td:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-html[theme='dark'] .picker .fill input:hover,
-html[theme='dark'] .picker .fill input:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-html[theme='dark'] .title,
-html[theme='dark'] .picker .fill input {
-  color: #ebebeb;
-}
-
-html[theme='dark'] .controls svg,
-html[theme='dark'] .toolbar table tr td svg {
-  fill: #ebebeb;
 }

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Color Picker</title>
     <link type="text/css" rel="stylesheet" href="index.css">
+    <link type="text/css" rel="stylesheet" href="resources/css/dark.css">
+    <link type="text/css" rel="stylesheet" href="resources/css/media.css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <div class="controls" id="clear" title="Clear history">
+    <div class="controls" id="clear" title="Clear the current palette">
       <svg width="14" height="14" viewBox="0 0 48 48">
         <path d="M 9.8212753,13.365952 H 34.12766 V 20.455317 L 44.25532,10.327657 34.12766,0.199997 V 7.2893585 H 3.744681 V 22.987232 H 9.8212753 Z"/>
         <path d="M 38.178723,34.634044 13.872338,34.634037 13.872339,27.544678 3.744681,37.672337 13.872339,47.8 13.87234,40.710639 44.255317,40.710637 44.255318,25.012763 38.178724,25.012764 Z"/>
@@ -23,23 +26,42 @@
       </svg>
     </div>    
     <div class="controls" id="tilesize" title="Color tile size (px)">
-      <input id="size" type="number" value="16" min="8" max="128" step="1">
+      <input id="size" type="number" value="28" min="8" max="128" step="1">
     </div>
     <div class="toolbar">
       <table>
         <tr>
           <td id="reload" title="Reload UI">
-            <svg height="13" width="13" viewBox="0 0 512 512">
+            <svg height="14" width="14" viewBox="0 0 512 512">
               <path d="M281.525,228.102l104.758-78.042 c12.082-12.085,12.082-24.259,0-36.342L281.525,35.674c-3.274-2.359-7.359-3.725-11.723-3.725c-10.992,0-19.803,8.536-19.803,19.083  v35.429C144.611,86.737,59.205,172.046,59.205,277.258c0,105.396,85.672,190.793,191.248,190.793 c98.03,0,178.809-73.498,189.977-168.169c0.092-0.275,0.367-3.187,0.367-4.455c0-9.992-8.181-18.169-18.261-18.169h-45.793 c-14.993,0-26.349,10.355-27.893,18.986c-8.811,46.156-49.519,80.954-98.397,80.954c-55.329,0-100.127-44.701-100.127-99.94 c0-55.064,44.523-99.667,99.674-99.941v35.437c0,10.541,8.811,19.076,19.803,19.076C274.166,231.83,278.251,230.471,281.525,228.102 z"/>
             </svg>
           </td>
+          <td id="import" title="Import settings">
+            <svg width="14" height="14" viewBox="0 0 128 128">
+              <path d="M 99.107143 7.0178571 L 99.107143 120.98214 L 120.16071 120.98214 L 120.16071 7.0178571 L 99.107143 7.0178571 z M 51.392857 27.821429 L 51.392857 52.482143 L 8.1428571 52.482143 L 8.1428571 75.517857 L 51.392857 75.517857 L 51.392857 100.17857 L 90.928571 64 L 51.392857 27.821429 z"/>
+            </svg>
+          </td>
+          <td id="export" title="Export settings">
+            <svg width="14" height="14" viewBox="0 0 128 128">
+              <path d="M 99.107143 7.0178571 L 99.107143 120.98214 L 120.16071 120.98214 L 120.16071 7.0178571 L 99.107143 7.0178571 z M 47.678571 27.821429 L 8.1428571 64 L 47.678571 100.17857 L 47.678571 75.517857 L 90.928571 75.517857 L 90.928571 52.482143 L 47.678571 52.482143 L 47.678571 27.821429 z"/>
+            </svg>
+          </td>
+          <td id="settings" title="Settings">
+            <svg width="14" height="14" viewBox="0 0 28 28">
+              <g transform="matrix(2.1646693,0,0,2.1646693,-1004.7755,-822.57435)">
+                <g transform="translate(464,380)">
+                  <path d="M 5.291747 7.3914293e-06 C 5.143599 7.3914293e-06 4.9923362 0.079047754 4.9669283 0.25986233 L 4.7070734 2.0147854 C 4.3170741 2.1447853 3.8930007 2.3918547 3.6017877 2.665325 L 2.0417558 2.0147854 C 1.8467562 1.9497856 1.679114 1.996668 1.5870096 2.1447129 L 0.28683269 4.4202481 C 0.24592767 4.5195349 0.2867604 4.7161217 0.41676016 4.8100305 L 1.7819008 5.8503525 C 1.70197 6.2886408 1.709374 6.7144634 1.7819008 7.1496272 L 0.41676016 8.2549129 C 0.2867604 8.3849125 0.28679703 8.5146959 0.35179643 8.6446953 L 1.6519734 10.920231 C 1.7169742 10.985231 1.8467562 11.050195 2.0417558 10.985194 L 3.6667514 10.334655 C 3.9917509 10.594653 4.3416255 10.821626 4.7720371 10.985194 L 5.0318921 12.675154 C 5.0318921 12.805155 5.161711 12.935009 5.3567107 12.935009 L 7.9570646 12.935009 C 8.0870641 12.935009 8.2818833 12.675154 8.5417382 10.985194 C 8.9425138 10.855195 9.3220246 10.594653 9.647024 10.334655 L 11.27202 10.985194 C 11.402018 11.050194 11.596803 10.985266 11.661802 10.855267 L 12.961979 8.5797316 C 13.026979 8.449732 13.027015 8.2549495 12.897015 8.1899492 L 11.401947 7.1496272 C 11.481867 6.7113382 11.474477 6.2855156 11.401947 5.8503525 L 12.767088 4.7450668 C 12.897089 4.615067 12.897052 4.485284 12.832051 4.3552844 L 11.531875 2.0797491 C 11.466875 2.0147493 11.337092 1.9497857 11.142092 2.0147854 L 9.5170965 2.665325 C 9.1920973 2.405326 8.8287526 2.1447853 8.4118108 2.0147854 L 8.1519558 0.32482606 C 8.1298436 0.19516072 8.0366195 7.3914293e-06 7.8921009 7.3914293e-06 L 5.291747 7.3914293e-06 z M 6.591924 4.2253569 C 7.8269211 4.2253569 8.8665569 5.2649922 8.8665569 6.4999899 C 8.8665569 7.7349872 7.8269211 8.7746228 6.591924 8.7746228 C 5.356926 8.7746228 4.3163887 7.7349872 4.3163887 6.4999899 C 4.3163887 5.2649922 5.356926 4.2253569 6.591924 4.2253569 z"/>
+                </g>
+              </g>
+            </svg>
+          </td>
           <td id="theme" title="Dark | Light mode">
-            <svg width="11" height="11" viewBox="0 0 122.8799 122.8799">
+            <svg width="12" height="12" viewBox="0 0 122.8799 122.8799">
               <path d="M 63.550085,1.4875858 A 60.101027,60.101027 0 0 0 3.45,61.587666 60.101027,60.101027 0 0 0 63.550085,121.6899 60.101027,60.101027 0 0 0 119.56373,83.196612 50.463617,50.463617 0 0 1 102.0998,86.352622 50.463617,50.463617 0 0 1 51.637166,35.887862 50.463617,50.463617 0 0 1 65.189815,1.5691534 60.101027,60.101027 0 0 0 63.550085,1.4875858 Z"/>
             </svg>
           </td>
           <td id="support" title="Open support page">
-            <svg height="12" width="12" viewBox="0 0 1792 1792">
+            <svg height="13" width="13" viewBox="0 0 1792 1792">
               <path d="M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z"/>
             </svg>
           </td>
@@ -55,7 +77,7 @@
       <table>
         <tr>
           <td class="button" title="Click here to pick a new color">
-            <input id="picker" type="color"></input>
+            <input id="picker" type="color">
           </td>
           <td class="fill" id="details">
             <input type="text" value="Loading...">
@@ -69,42 +91,92 @@
       </table>
     </div>
     <!--  -->
-    <details index='0'><summary class="title">User defined</summary><div class="user-tiles"></div></details>
-    <details index='1'><summary class="title">Artistic colors</summary><div class="artistic-tiles"></div></details>
-    <details index='2'><summary class="title">Favorite colors</summary><div class="favorite-tiles"></div></details>
-    <details index='3'><summary class="title">UI design colors</summary><div class="ui-tiles"></div></details>
-    <details index='4'><summary class="title">Popular colors</summary><div class="popular-tiles"></div></details>
-    <details index='5'><summary class="title">Drawing colors</summary><div class="drawing-tiles"></div></details>
-    <details index='6'><summary class="title">Game colors</summary><div class="game-tiles"></div></details>
-    <details index='7'><summary class="title">CSS3 colors</summary><div class="css3-tiles"></div></details>
-    <details index='8'><summary class="title">Material colors</summary><div class="material-tiles"></div></details>
-    <details index='9'><summary class="title">Rainbow colors</summary><div class="rainbow-tiles"></div></details>
-    <details index='10'><summary class="title">Spectrum colors</summary><div class="spectrum-tiles"></div></details>
-    <details index='11'><summary class="title">Safe set of colors</summary><div class="safe-tiles"></div></details>
-    <details index='12'><summary class="title">Nice Random colors</summary><div class="random-tiles"></div></details>
-    <details index='13'><summary class="title">Monitor colors</summary><div class="monitor-tiles"></div></details>
-    <details index='14'><summary class="title">Comic colors</summary><div class="comic-tiles"></div></details>
-    <details index='15'><summary class="title">Large set of colors</summary><div class="large-tiles"></div></details>
-    <details index='16'><summary class="title">Hues colors</summary><div class="hues-tiles"></div></details>
+    <div class="pane" id="pane-settings" hidden>
+      <div class="pane-row head">
+        <span>Settings</span>
+        <span class="hint">Close to return to the picker</span>
+      </div>
+      <div class="pane-row">
+        <span>Theme</span>
+        <span class="pane-value">
+          <input type="radio" id="theme-light" name="theme-choice" value="light"><label for="theme-light">Light</label>
+          <input type="radio" id="theme-dark" name="theme-choice" value="dark"><label for="theme-dark">Dark</label>
+          <input type="radio" id="theme-auto" name="theme-choice" value="auto"><label for="theme-auto">Auto</label>
+        </span>
+      </div>
+      <div class="pane-row">
+        <span>Tile size (px)</span>
+        <span class="pane-value"><input id="setting-size" type="number" value="28" min="8" max="128" step="1"></span>
+      </div>
+      <div class="pane-row">
+        <span>Notification timeout (seconds)</span>
+        <span class="pane-value"><input id="setting-timeout" type="number" value="5" min="1" max="20" step="1"></span>
+      </div>
+      <div class="pane-row">
+        <span>Auto add to palette</span>
+        <span class="pane-value"><input id="setting-autoadd" type="checkbox"></span>
+      </div>
+      <div class="pane-row">
+        <span>Whole page scroll</span>
+        <span class="pane-value"><input id="setting-pagescroll" type="checkbox"></span>
+      </div>
+      <div class="pane-row head sub">
+        <span>Sections</span>
+        <span class="scontrols-inline" id="section-actions">
+          <button id="section-open" type="button" hidden></button>
+          <button id="section-check" type="button" hidden></button>
+        </span>
+        <span class="hint">Uncheck to hide a section</span>
+      </div>
+      <div class="pane-grid" id="section-list"></div>
+      <div class="pane-row reset">
+        <span>Factory reset</span>
+        <span class="pane-value"><button id="setting-reset" type="button">Reset everything to defaults</button></span>
+      </div>
+    </div>
     <!--  -->
-    <script type="text/javascript" src="resources/favorite.js"></script>
-    <script type="text/javascript" src="resources/artistic.js"></script>
-    <script type="text/javascript" src="resources/material.js"></script>
-    <script type="text/javascript" src="resources/spectrum.js"></script>
-    <script type="text/javascript" src="resources/popular.js"></script>
-    <script type="text/javascript" src="resources/rainbow.js"></script>
-    <script type="text/javascript" src="resources/drawing.js"></script>
-    <script type="text/javascript" src="resources/random.js"></script>
-    <script type="text/javascript" src="resources/monitor.js"></script>
-    <script type="text/javascript" src="resources/comic.js"></script>
-    <script type="text/javascript" src="resources/large.js"></script>
-    <script type="text/javascript" src="resources/game.js"></script>
-    <script type="text/javascript" src="resources/safe.js"></script>
-    <script type="text/javascript" src="resources/css3.js"></script>
-    <script type="text/javascript" src="resources/hues.js"></script>
-    <script type="text/javascript" src="resources/ui.js"></script>
+    <div class="pane" id="pane-paste" hidden>
+      <div class="pane-row head">
+        <span>Import settings</span>
+        <span class="hint">Paste the exported text below</span>
+      </div>
+      <textarea id="paste-text" spellcheck="false" placeholder="Paste the exported settings text here"></textarea>
+      <div class="pane-actions">
+        <button id="paste-cancel" type="button">Cancel</button>
+        <button id="paste-apply" type="button">Import</button>
+      </div>
+    </div>
     <!--  -->
-    <script type="text/javascript" src="resources/notify.js"></script>
+    <div class="sections" id="sections"></div>
+    <!--  -->
+    <script type="text/javascript" src="resources/js/favorite.js"></script>
+    <script type="text/javascript" src="resources/js/artistic.js"></script>
+    <script type="text/javascript" src="resources/js/material.js"></script>
+    <script type="text/javascript" src="resources/js/spectrum.js"></script>
+    <script type="text/javascript" src="resources/js/popular.js"></script>
+    <script type="text/javascript" src="resources/js/rainbow.js"></script>
+    <script type="text/javascript" src="resources/js/drawing.js"></script>
+    <script type="text/javascript" src="resources/js/random.js"></script>
+    <script type="text/javascript" src="resources/js/monitor.js"></script>
+    <script type="text/javascript" src="resources/js/comic.js"></script>
+    <script type="text/javascript" src="resources/js/large.js"></script>
+    <script type="text/javascript" src="resources/js/game.js"></script>
+    <script type="text/javascript" src="resources/js/safe.js"></script>
+    <script type="text/javascript" src="resources/js/css3.js"></script>
+    <script type="text/javascript" src="resources/js/hues.js"></script>
+    <script type="text/javascript" src="resources/js/ui.js"></script>
+    <script type="text/javascript" src="resources/js/pastel.js"></script>
+    <script type="text/javascript" src="resources/js/neon.js"></script>
+    <script type="text/javascript" src="resources/js/vintage.js"></script>
+    <script type="text/javascript" src="resources/js/earth.js"></script>
+    <script type="text/javascript" src="resources/js/ocean.js"></script>
+    <script type="text/javascript" src="resources/js/sunset.js"></script>
+    <script type="text/javascript" src="resources/js/candy.js"></script>
+    <script type="text/javascript" src="resources/js/nature.js"></script>
+    <script type="text/javascript" src="resources/js/metallic.js"></script>
+    <script type="text/javascript" src="resources/js/skin.js"></script>
+    <!--  -->
+    <script type="text/javascript" src="resources/js/notify.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </body>
 </html>

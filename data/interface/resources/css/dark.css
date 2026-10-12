@@ -1,0 +1,120 @@
+html[theme='dark'], 
+html[theme='dark'] body {
+  color: #ebebeb;
+  color-scheme: dark;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .controls,
+html[theme='dark'] .controls input {
+  color: #ebebeb;
+  background-color: #1e1e1e;
+}
+
+html[theme='dark'] .controls:hover {
+  background-color: #3b3b3b;
+}
+
+html[theme='dark'] .toolbar {
+  background-color: #3b3b3b;
+}
+
+html[theme='dark'] .toolbar table tr td:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[theme='dark'] .picker .fill input:hover,
+html[theme='dark'] .picker .fill input:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+html[theme='dark'] .pane-row .hint {
+  color: #999;
+}
+
+html[theme='dark'] .pane-row {
+  color: #ebebeb;
+}
+
+html[theme='dark'] .pane textarea,
+html[theme='dark'] .pane input[type='number'] {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+html[theme='dark'] .pane input[type='number']:hover,
+html[theme='dark'] .pane input[type='number']:focus {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+html[theme='dark'] .pane-actions button:hover,
+html[theme='dark'] .pane-row button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[theme='dark'] .pane-grid label {
+  color: #ebebeb;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+html[theme='dark'] .pane-grid label:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+html[theme='dark'] .pane-grid label:has(input:checked) {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+html[theme='dark'] .strip select,
+html[theme='dark'] .strip button {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+html[theme='dark'] .strip select:hover,
+html[theme='dark'] .strip button:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+html[theme='dark'] .scontrols button {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[theme='dark'] .scontrols button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+html[theme='dark'] .scontrols-inline button {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[theme='dark'] .scontrols-inline button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+html[theme='dark'] .pane,
+html[theme='dark'] .sections {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html[theme='dark'] .strip svg,
+html[theme='dark'] .controls svg,
+html[theme='dark'] .scontrols svg,
+html[theme='dark'] .toolbar table tr td svg {
+  fill: #ebebeb;
+}
+
+html[theme='dark'] .scontrols-inline svg {
+  fill: #ebebeb;
+}
+
+html[theme='dark'] .sections summary,
+html[theme='dark'] .picker .fill input {
+  color: #ebebeb;
+}
+
+html[theme='dark'] .strip-hint {
+  color: #999;
+}
+
+html[theme='dark'] .sections {
+  scrollbar-color: #555 #1e1e1e;
+}
